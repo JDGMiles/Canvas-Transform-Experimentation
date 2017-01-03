@@ -29,7 +29,7 @@
 		<canvas id="canvas" style="padding:0px 80px 0px 80px;"></canvas>
 
 		<br>
-		<textarea id="A">1</textarea> <textarea id="B">0</textarea> <textarea id="C">0</textarea> <textarea id="D">1</textarea> <textarea id="E">0</textarea> <textarea id="F">0</textarea>
+		<textarea id="setting0">1</textarea> <textarea id="setting1">0</textarea> <textarea id="setting2">0</textarea> <textarea id="setting3">1</textarea> <textarea id="setting4">0</textarea> <textarea id="setting5">0</textarea>
 
   </center>
 </body>
@@ -40,10 +40,18 @@ var field={width:780, height:500};
 var fieldcolor="#AAAAAA";
 var sprite=new Image();
 sprite.src="Freejam Regent.jpg";
-var xpos=field.width/2;
-var ypos=field.height/2;
+var xpos=field.width/2-265/2;
+var ypos=field.height/2-370/2;
 
-var a=1,b=0,c=0,d=1,e=0,f=0;
+var fps=65;
+var time=0;
+var duration=fps/2;
+
+var settings=[1,0,0,1,0,0];
+
+var start=[1,0,0,1,0,0];
+
+var end=[1,0,0.4,0.3,0,0];
 
 var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d");
@@ -53,24 +61,20 @@ canvas.height = field.height;
 
 function draw(){
 
-	a=document.getElementById("A").value;
-	b=document.getElementById("B").value;
-	c=document.getElementById("C").value;
-	d=document.getElementById("D").value;
-	e=document.getElementById("E").value;
-	f=document.getElementById("F").value;
+	for(i=0; i<6; i++){
+		settings[i]=a=document.getElementById("setting"+i).value;
+	}
 
 	ctx.fillStyle=fieldcolor;
 	ctx.fillRect(0, 0, field.width, field.height);
 
-
 	ctx.save();
-	ctx.translate(xpos,ypos);
-	ctx.transform(a,b,c,d,e,f);
-	ctx.drawImage(sprite, -265/2, -370/2);
+	ctx.translate(xpos-time,ypos);
+	ctx.transform(settings[0],settings[1],settings[2],settings[3],settings[4],settings[5]);
+	ctx.drawImage(sprite, 0, 0);
 	ctx.restore();
 
-	setTimeout(draw, 10);
+	setTimeout(draw, 1000/fps);
 
 }
 
